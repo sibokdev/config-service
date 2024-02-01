@@ -13,11 +13,11 @@ spring:
     name: config-service ❷
   cloud:
     config:
-    server:
-      git:
-        uri: https://github.com/sibokdev/config-repo
-        default-label: main
-        ## next properties help in case of remote repo failure
-        timeout: 5 #Time limit to establish a connection with the remote repository
-        clone-on-start: true #Clones the remote repository locally on startup
-        force-pull: true #Forces pulling the remote repository and discarding any local changes
+      server:
+        git:
+          uri: https://github.com/sibokdev/config-repo
+          default-label: main
+          ## next properties help in case of remote repo failure
+          timeout: 5 #Time limit to establish a connection with the remote repository
+          clone-on-start: true #Clones the remote repository locally on startup
+          force-pull: true #Forces pulling the remote repository and discarding any local changes
