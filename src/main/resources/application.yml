@@ -10,7 +10,7 @@ server:
 ## default-label indicates which branch will be the default to get config properties
 spring:
   application:
-    name: config-service ❷
+    name: config-service
   cloud:
     config:
       server:
