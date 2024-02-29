@@ -1,0 +1,29 @@
+apiVersion: apps/v1 #The API version for Deployment objects
+kind: Deployment #The type of object to create
+metadata:
+  name: config-service #The name of the Deployment
+  labels: #A set of labels attached to the Deployment
+    app: config-service #This Deployment is labeled with “app=catalog-service.”
+spec:
+  replicas: 1 #number of pod replicas to deploy
+  selector: #Defines the labels used to select the Pods to be scaled
+    matchLabels:
+      app: config-service
+  template: #The template for creating a Pod
+    metadata:
+      labels: #Labels attached to the Pod object. They should match the ones used as selector
+        app: config-service
+    spec: #The list of containers in the Pod (one in this case)
+      containers:
+        - name: config-service #Name of the pod
+          image: config-service #image used to run the container, no tag defined so is taking latest implicitly
+          imagePullPolicy: IfNotPresent #instructs kubernetes to pull the image from comntainer registry only if not present locally yet
+          lifecycle: #Makes Kubernetes wait 5 seconds before sending the SIGTERM signal to the Pod
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 8888 #ports exposed by the container
+          env: # list of environment variables passed to the pod
+            - name: BPL_JVM_THREAD_COUNT # Paketo build pack  env var to config number of threads for memory calculation
+              value: "50"
